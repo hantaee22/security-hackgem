@@ -1,1 +1,78 @@
+class MetasploitModule < Msf::Auxiliary
 
+  include Msf::Auxiliary::Scanner
+
+  def initialize(info = {})
+    super(
+      update_info(
+        info,
+        'Name' => 'Module name',
+        'Description' => %q{
+          Say something that the user might want to know.
+        },
+        'Author' => [ 'Name' ],
+        'License' => MSF_LICENSE
+      )
+    )
+  end
+
+  def run_host(ip)
+    # Main method
+  end
+
+end
+
+
+
+
+
+
+
+require 'msf/core'
+
+class MetasploitModule < Msf::Exploit::Remote
+  Rank = NormalRanking
+
+  include Msf::Exploit::Remote::Tcp
+
+  def initialize(info = {})
+    super(update_info(info,
+      'Name'           => 'Example Exploit',
+      'Description'    => %q{
+        간단한 설명 작성.
+      },
+      'Author'         => [
+        '작성자'
+      ],
+      'License'        => MSF_LICENSE,
+      'References'     => [
+        ['CVE', '2025-12345'],
+        ['URL', 'https://example.com']
+      ],
+      'Platform'       => 'win',
+      'Arch'           => ARCH_X86,
+      'Targets'        => [
+        ['Windows 10', {}]
+      ],
+      'DefaultTarget'  => 0,
+      'DisclosureDate' => '2025-08-28',
+      'Notes' => {
+        'Stability'   => [ CRASH_SAFE ],
+        'Reliability' => [ REPEATABLE_SESSION ],
+        'SideEffects' => [ ARTIFACTS_ON_DISK, IOC_IN_LOGS ]
+      }
+    ))
+
+    register_options(
+      [
+        Opt::RPORT(80)
+      ]
+    )
+  end
+
+  def exploit
+    connect
+    # 공격 로직
+    disconnect
+  end
+end
